@@ -21,7 +21,9 @@ namespace DatabaseCRUD.ViewModel
         public Album Album { get; set; }
         public ObservableCollection<Artist> Artists
         {
+            
             get {
+                //для отображения в окне редактирования текущего артиста
                 var Artists = Album.ListArtist;
                 Artists.Add(Album.Artist);
                 return Artists;
@@ -92,7 +94,7 @@ namespace DatabaseCRUD.ViewModel
                       SongView AlbumWindow = new SongView(SelectedSong);
                       if (AlbumWindow.ShowDialog() == true)
                       {
-                          //Artist.UpdateAlbum(SelectedAlbum);
+                          Album.UpdateSong(SelectedSong);
                       }
                   }));
             }

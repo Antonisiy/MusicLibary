@@ -48,41 +48,25 @@ namespace DatabaseCRUD.DataModel
         public Artist CurrentArtist { get; set; }
         public void CreateArtist(Artist newArtist)
         {
-
-            if (Validate(newArtist))
+            if (ArtistGenres.FirstOrDefault(u => u.ArtistId == newArtist.Id) == null)
             {
-                if (ArtistGenres.FirstOrDefault(u => u.ArtistId == newArtist.Id) == null)
-                {
-                    var newArtGen = new ArtistGenre() { Genre = this, GenreId = this.Id, ArtistId = newArtist.Id, Artist = newArtist };
-                    ArtistGenres.Add(newArtGen);
-                }
-                else
-                {
-                    MessageBox.Show("Такой артист уже добавлен!", "Ошибка!");
-                    return;
-                }
+                var newArtGen = new ArtistGenre() { Genre = this, GenreId = this.Id, ArtistId = newArtist.Id, Artist = newArtist };
+                ArtistGenres.Add(newArtGen);
             }
             else
-                MessageBox.Show("Не заполнены поля данных!", "Ошибка!");
-           
-           
+            {
+                MessageBox.Show("Такой артист уже добавлен!", "Ошибка!");
+                return;
+            }
         }
         public void UpdateArtist(ArtistGenre updateArtist)
         {
-            if (Validate(updateArtist.Artist))
+            var item = ArtistGenres.FirstOrDefault(u => u.ArtistId == updateArtist.Artist.Id);
+            if (item != null)
             {
-                var item = ArtistGenres.FirstOrDefault(u => u.ArtistId == updateArtist.Artist.Id);
-                if (item != null)
-                {
-                    ArtistGenres.Remove(item);
-                    ArtistGenres.Add(updateArtist);
-                }
+                ArtistGenres.Remove(item);
+                ArtistGenres.Add(updateArtist);
             }
-            else
-            {
-                MessageBox.Show("Невалидные значения!", "Ошибка!");
-            }
-
         }
         public void DeleteArtist(Artist delArtist)
         {
@@ -93,16 +77,6 @@ namespace DatabaseCRUD.DataModel
         {
             return Name;
         }
-        bool Validate(Artist artist)
-        {
-            if (string.IsNullOrWhiteSpace(artist.Country) || string.IsNullOrWhiteSpace(artist.Name))
-            {
-                return false;
-            }
-            else
-                return true;
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
