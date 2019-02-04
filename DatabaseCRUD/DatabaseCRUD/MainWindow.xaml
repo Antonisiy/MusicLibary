@@ -1,0 +1,172 @@
+﻿<Window x:Class="DatabaseCRUD.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DatabaseCRUD"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="700" Width="800" WindowStartupLocation="CenterScreen" SizeToContent="Width">
+    <UserControl DataContext="{Binding MainWindowViewModel, Source={StaticResource ViewModelLocator}}" >
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.1*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="0.2*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Список исполнителей музыкальной бибилиотеки" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Calibri" FontSize="20" />
+            <DataGrid x:Name="Artists" Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding Artists}" SelectedItem="{Binding SelectedArtist}" AutoGenerateColumns="False" IsReadOnly="True" >
+               
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Редактировать данные" Command="{Binding UpdateItemCommand}"/>
+                        <MenuItem Header="Удалить исполнителя" Command="{Binding DeleteItemCommand}"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+                <DataGrid.Columns>
+
+                    <DataGridTextColumn Header="Имя" Binding="{Binding Path=Name}" Width="200">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Биография" Binding="{Binding Path=Biography}" Width="250">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Страна" Binding="{Binding Path=Country}" Width="150">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTemplateColumn x:Name="Genres" Header="Жанры" Width="150">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ListBox x:Name="Genres_CB" ItemsSource="{Binding ArtistGenres}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Path=Genre}"/>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <!--<DataGridTemplateColumn x:Name="Albums" Header="Альбомы" Width="150">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ListBox x:Name="Albums_CB" ItemsSource="{Binding Albums}">
+                                    --><!--
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock  Text="{Binding Title}"/>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>-->
+                </DataGrid.Columns>
+            </DataGrid>
+            <GroupBox x:Name="groupBoxAlbums" Grid.Row="2"  Grid.Column="1" Header="Информация о альбоме" HorizontalAlignment="Stretch" VerticalAlignment="Top" FontWeight="Bold">
+                <Grid DataContext="{Binding ElementName=AlbumS, Path=SelectedItem}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left">Название:</Label>
+                    <Label Grid.Column="0" Grid.Row="2">Описание:</Label>
+                    <Label Grid.Column="0" Grid.Row="3">Дата:</Label>
+
+                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Title}" HorizontalAlignment="Left"></TextBlock>
+                    <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Description}" HorizontalAlignment="Left"></TextBlock>
+                    <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding DateReleaseText}" HorizontalAlignment="Left"></TextBlock>
+                </Grid>
+            </GroupBox>
+            <GroupBox x:Name="groupBoxAlbum" Grid.Row="2"  Grid.Column="0" Header="Альбомы исполнителя" HorizontalAlignment="Stretch" VerticalAlignment="Top" FontWeight="Bold">
+                <StackPanel >
+                    <ListBox x:Name="AlbumS" DataContext="{Binding ElementName=Artists,Path=SelectedItem}" ItemsSource="{Binding Albums, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" MinHeight="50" >
+                        <!--<i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction 
+                                Command="{Binding SelectionAlbumChangeCommand, RelativeSource={}}"
+                                CommandParameter="{Binding ElementName=AlbumS,Path=SelectedItem}" />
+                               </i:EventTrigger>
+                        </i:Interaction.Triggers>-->
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="5">
+                                    <TextBlock FontSize="14" Text="{Binding Path=Title}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </GroupBox>
+            
+            <GroupBox x:Name="groupBoxSong" Grid.Row="3"  Grid.Column="1" Header="Информация о треке" HorizontalAlignment="Stretch" VerticalAlignment="Top" FontWeight="Bold">
+                <StackPanel >
+                    <Grid DataContext="{Binding ElementName=SongS, Path=SelectedItem}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                           
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Grid.Row="1">Название:</Label>
+                    
+
+                        <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Title}" HorizontalAlignment="Left"></TextBlock>
+                 
+                    </Grid>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox x:Name="groupBoxSongs" Grid.Row="3"  Grid.Column="0" Header="Треки в альбоме" HorizontalAlignment="Stretch" VerticalAlignment="Top" FontWeight="Bold">
+                <StackPanel >
+                    <ListBox x:Name="SongS" DataContext="{Binding ElementName=AlbumS,Path=SelectedItem}" ItemsSource="{Binding Songs, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" MinHeight="50" >
+                        <!--<i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction 
+                                Command="{Binding SelectionSongChangeCommand}"
+                                CommandParameter="{Binding ElementName=SongS,Path=SelectedItem}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>-->
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="5">
+                                    <TextBlock FontSize="14" Text="{Binding Path=Title}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </GroupBox>
+            <Button Grid.Row="4"  x:Name="buttonAddArtist" Content="Добавить нового исполнителя" Command="{Binding CreateArtistCommand, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" MaxHeight="25" MaxWidth="300" HorizontalAlignment="Left" Margin="100,0,0,0" />
+            <Button Grid.Row="4" Grid.Column="1"  x:Name="buttonAddGenre" Content="Список жанров" Command="{Binding CreateGenreCommand, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" MaxHeight="25" MaxWidth="300" HorizontalAlignment="Right" Margin="0,0,100,0"/>
+        </Grid>
+    </UserControl>
+</Window>
+

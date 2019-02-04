@@ -1,0 +1,21 @@
+﻿<Window x:Class="DatabaseCRUD.View.ExistentArtistView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DatabaseCRUD.View"
+        mc:Ignorable="d"
+        Title="Список артистов" Height="250" Width="300" WindowStartupLocation="CenterScreen" SizeToContent="Height" >
+    <StackPanel >
+        <ListBox x:Name="Artists" ItemsSource="{Binding Artists}" SelectedItem="{Binding SelectedArtist}" MinHeight="50">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="5">
+                        <TextBlock FontSize="14" Text="{Binding Name}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button x:Name="ButtonAddNewArtist" Command="{Binding AddArtistCommand, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" Content="Добавить" IsDefault="True"/>
+    </StackPanel>
+</Window>

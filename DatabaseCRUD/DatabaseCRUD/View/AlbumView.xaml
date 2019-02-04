@@ -1,0 +1,44 @@
+﻿<Window x:Class="DatabaseCRUD.View.AlbumView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DatabaseCRUD.View"
+        mc:Ignorable="d"
+        Title="Альбом" MinHeight="250" Width="400" d:DesignHeight="425" WindowStartupLocation="CenterScreen">
+    <StackPanel>
+        <UserControl DataContext="{Binding Album}" >
+            <StackPanel>
+                <Label x:Name="labelTitle" Content="Название" FontWeight="Bold"/>
+                <TextBox x:Name="textBoxTitle" Height="20" TextWrapping="Wrap" Text="{Binding Title}"/>
+                <Label x:Name="labelDes" Content="Описание" FontWeight="Bold"/>
+                <TextBox x:Name="textBoxDes" Height="60" TextWrapping="Wrap" Text="{Binding Description,TargetNullValue=[Описание не предоставлено]}"/>
+                <Label x:Name="labelDate" Content="Дата релиза" FontWeight="Bold"/>
+                <DatePicker x:Name="textBoxCountry" Height="30" DisplayDateStart="01.01.1990" SelectedDateFormat="Short" SelectedDate="{Binding DateRelease}"/>
+            </StackPanel>
+        </UserControl>
+        <Label x:Name="labelArtist" Content="Артист" FontWeight="Bold"/>
+        <ComboBox x:Name="CBoxArtist" IsReadOnly="True" Height="30" ItemsSource="{Binding Artists, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedArtist, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <GroupBox x:Name="groupBoxGenres" Grid.ColumnSpan="4" Header="Треки в альбоме" HorizontalAlignment="Stretch" VerticalAlignment="Top" FontWeight="Bold">
+            <StackPanel >
+                <ListBox x:Name="Track" ItemsSource="{Binding Songs}" SelectedItem="{Binding SelectedSong}" MinHeight="50">
+                    <ListBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Редактировать данные" Command="{Binding UpdateSongCommand}"/>
+                            <MenuItem Header="Удалить трек" Command="{Binding DeleteSongCommand}"/>
+                        </ContextMenu>
+                    </ListBox.ContextMenu>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="5">
+                                <TextBlock FontSize="14" Text="{Binding Path=Title}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Button x:Name="ButtonAddTrack" Command="{Binding AddSongCommand, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" Content="Добавить трек"/>
+            </StackPanel>
+        </GroupBox>
+        <Button x:Name="buttonSave" Content="Сохранить" Command="{Binding SaveChangeCommand, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" IsDefault="True"/>
+    </StackPanel>
+</Window>

@@ -1,0 +1,62 @@
+﻿<Window x:Class="DatabaseCRUD.View.ArtistView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DatabaseCRUD.View"
+        mc:Ignorable="d"
+         x:Name="ArtistWindow"
+        Title="Артист" MinHeight="250" Width="400" d:DesignHeight="450" WindowStartupLocation="CenterScreen">
+    <StackPanel >
+        <StackPanel DataContext="{Binding Artist}">
+            <Label x:Name="labelName" Content="Имя" FontWeight="Bold"/>
+            <TextBox x:Name="textBoxName" Height="20" TextWrapping="Wrap" Text="{Binding Name}"/>
+            <Label x:Name="labelBio" Content="Биография" FontWeight="Bold"/>
+            <TextBox x:Name="textBoxBio" Height="60" TextWrapping="Wrap" Text="{Binding Biography,TargetNullValue=[Описание не предоставлено]}"/>
+            <Label x:Name="labelCountry" Content="Страна" FontWeight="Bold"/>
+            <TextBox x:Name="textBoxCountry" Height="20" TextWrapping="Wrap" Text="{Binding Country}"/>
+        </StackPanel>
+        <GroupBox x:Name="groupBoxGenres" Grid.ColumnSpan="4" Header="Жанры" HorizontalAlignment="Stretch" VerticalAlignment="Top" FontWeight="Bold">
+            <StackPanel >
+                <ListBox x:Name="Genres" ItemsSource="{Binding Genres}" SelectedItem="{Binding SelectedGenre}" MinHeight="50">
+                    <ListBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Редактировать данные" Command="{Binding UpdateGenreCommand}"/>
+                            <MenuItem Header="Удалить жанр" Command="{Binding DeleteGenreCommand}"/>
+                        </ContextMenu>
+                    </ListBox.ContextMenu>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="5">
+                                <TextBlock FontSize="14" Text="{Binding Path=Genre}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Button x:Name="ButtonAddGenre" Command="{Binding AddGenreCommand, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" Content="Добавить жанр"/>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox x:Name="groupBoxAlbums" Grid.ColumnSpan="4" Header="Альбомы" HorizontalAlignment="Stretch" VerticalAlignment="Top" FontWeight="Bold">
+            <StackPanel >
+                <ListBox x:Name="Albums" ItemsSource="{Binding Albums, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedAlbum}" MinHeight="50" >
+                    <ListBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Редактировать данные" Command="{Binding UpdateAlbumCommand}"/>
+                            <MenuItem Header="Удалить альбом" Command="{Binding DeleteAlbumCommand}"/>
+                        </ContextMenu>
+                    </ListBox.ContextMenu>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="5">
+                                <TextBlock FontSize="14" Text="{Binding Path=Title}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Button x:Name="ButtonAddAlbum" Command="{Binding AddAlbumCommand, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" Content="Добавить альбом"/>
+            </StackPanel>
+        </GroupBox>
+
+        <Button x:Name="buttonSave" Content="Сохранить" Command="{Binding SaveChangeCommand, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" Margin="10" IsDefault="True" />
+    </StackPanel>
+</Window>

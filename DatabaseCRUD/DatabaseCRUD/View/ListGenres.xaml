@@ -1,0 +1,55 @@
+﻿<Window x:Class="DatabaseCRUD.View.ListGenres"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DatabaseCRUD.View"
+        mc:Ignorable="d"
+        Title="Список жанров" SizeToContent="Width" Height="450" WindowStartupLocation="CenterScreen">
+    <UserControl>
+    <Grid Background="#FFD4EAB5" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="0.5*"></RowDefinition>
+            <RowDefinition Height="0.5*"></RowDefinition>
+        </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <DataGrid x:Name="GenreGrid" ItemsSource ="{Binding Genres}" SelectedItem="{Binding SelectedGenre}" AutoGenerateColumns="False" Grid.RowSpan="3" Grid.ColumnSpan="4" Background="#FFCFC6EC"  IsReadOnly="True">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Редактировать данные" Command="{Binding UpdateGenreCommand}" CommandParameter="{Binding SelectedGenre}"/>
+                        <MenuItem Header="Удалить" Command="{Binding DeleteGenreCommand}" CommandParameter="{Binding SelectedGenre}" />
+                    </ContextMenu>
+            </DataGrid.ContextMenu>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Название" Binding="{Binding Path=Name}" Width="auto" />
+                <DataGridTextColumn Header="Описание" Binding="{Binding Path=Description}" Width="auto"/>
+                <DataGridTemplateColumn x:Name="Genres" Header="Артисты" Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ListBox x:Name="Genres_CB" ItemsSource="{Binding ArtistGenres}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Artist}"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+            <Button x:Name="buttonSave" Grid.Column="2"  Grid.Row="3" Content="Сохранить" Command="{Binding SaveChangeCommand, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}"  Margin="10" MaxHeight="30" MinWidth="100" IsDefault="True"/>
+            <Button x:Name="buttonAdd" Grid.Column="1"  Grid.Row="3"  Content="Добавить новый жанр" Command="{Binding CreateGenreCommand, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}"  Margin="10" MaxHeight="30" MinWidth="150"/>
+           
+        
+    </Grid>
+    </UserControl>
+</Window>
