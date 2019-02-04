@@ -41,7 +41,7 @@ namespace DatabaseCRUD.DataModel
         [NotMapped]
         public string DateReleaseText
         {
-            get => DateRelease.ToString();
+            get => DateRelease.Value.ToShortDateString();
         }
         public void CreateSong(Song newSong)
         {
