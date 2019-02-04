@@ -30,10 +30,44 @@ namespace DatabaseCRUD.DataModel
         }
         public string Id { get; set; }
         [Required]
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public virtual ObservableCollection<ArtistGenre> ArtistGenres { get; set; }
-
+        private string name, description;
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
+            set
+            {
+                name = value;
+                OnPropertyChanged();
+            }
+        }
+        public string Description
+        {
+            get
+            {
+                return description;
+            }
+            set
+            {
+                description = value;
+                OnPropertyChanged();
+            }
+        }
+        public ObservableCollection<ArtistGenre> artistGenres;
+        public virtual ObservableCollection<ArtistGenre> ArtistGenres
+        {
+            get
+            {
+                return artistGenres;
+            }
+            set
+            {
+                artistGenres = value;
+                OnPropertyChanged();
+            }
+        }
         [NotMapped]
         public ObservableCollection<Genre> ListGenres
         {
@@ -68,10 +102,9 @@ namespace DatabaseCRUD.DataModel
                 ArtistGenres.Add(updateArtist);
             }
         }
-        public void DeleteArtist(Artist delArtist)
+        public void DeleteArtist(ArtistGenre delArtist)
         {
-            var delArtGen = new ArtistGenre() { Genre = this, GenreId = this.Id, ArtistId = delArtist.Id, Artist = delArtist };
-            ArtistGenres.Remove(delArtGen);
+            ArtistGenres.Remove(delArtist);
         }
         public override string ToString()
         {

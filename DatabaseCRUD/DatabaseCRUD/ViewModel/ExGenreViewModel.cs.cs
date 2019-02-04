@@ -37,13 +37,13 @@ namespace DatabaseCRUD.ViewModel
                 return createItemCommand ??
                   (createItemCommand = new Command((selectedItem) =>
                   {
-                      if (SelectedGenre.Id != null)
+                      if (SelectedGenre!=null && SelectedGenre.Id != null )
                       {
                           SelectGenre(SelectedGenre);
                           CloseAction?.Invoke();
                       }
                       else
-                          MessageBox.Show("Выберите артиста!");
+                          MessageBox.Show("Выберите жанр!");
                   }));
             }
         }

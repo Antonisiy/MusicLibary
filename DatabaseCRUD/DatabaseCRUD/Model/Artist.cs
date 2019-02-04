@@ -151,10 +151,9 @@ namespace DatabaseCRUD.DataModel
                 ArtistGenres.Add(updateGenre);
             }
         }
-        public void DeleteGenre(Genre delGenre)
+        public void DeleteGenre(ArtistGenre delGenre)
         {
-            var delArtGen = new ArtistGenre() { Genre = delGenre, GenreId = delGenre.Id, ArtistId = this.Id, Artist = this };
-            ArtistGenres.Remove(delArtGen);
+            ArtistGenres.Remove(delGenre);
         }
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")

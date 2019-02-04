@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:DatabaseCRUD"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="800" WindowStartupLocation="CenterScreen" SizeToContent="Width">
+        Title="Главное окно" Height="700" Width="800" WindowStartupLocation="CenterScreen" SizeToContent="Width">
     <UserControl DataContext="{Binding MainWindowViewModel, Source={StaticResource ViewModelLocator}}" >
         <Grid>
             <Grid.RowDefinitions>

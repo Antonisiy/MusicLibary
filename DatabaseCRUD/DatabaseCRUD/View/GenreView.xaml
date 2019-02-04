@@ -20,6 +20,12 @@
             <GroupBox x:Name="groupBoxArtists" Grid.ColumnSpan="4" Header="Артисты в этом жанре" HorizontalAlignment="Stretch" VerticalAlignment="Top" FontWeight="Bold">
                 <StackPanel >
                     <ListBox x:Name="Artists" ItemsSource="{Binding Artists}" SelectedItem="{Binding SelectedArtist}" MinHeight="50">
+                        <ListBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Редактировать данные" Command="{Binding UpdateArtistCommand}"/>
+                                <MenuItem Header="Удалить артиста" Command="{Binding DeleteArtistCommand}"/>
+                            </ContextMenu>
+                        </ListBox.ContextMenu>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Margin="5">

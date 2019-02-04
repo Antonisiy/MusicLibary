@@ -24,7 +24,7 @@
             <DataGrid x:Name="GenreGrid" ItemsSource ="{Binding Genres}" SelectedItem="{Binding SelectedGenre}" AutoGenerateColumns="False" Grid.RowSpan="3" Grid.ColumnSpan="4" Background="#FFCFC6EC"  IsReadOnly="True">
             <DataGrid.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Редактировать данные" Command="{Binding UpdateGenreCommand}" CommandParameter="{Binding SelectedGenre}"/>
+                        <MenuItem Header="Редактировать данные" Command="{Binding UpdateGenreCommand}" CommandParameter="{Binding SelectedGenre}"/>
                         <MenuItem Header="Удалить" Command="{Binding DeleteGenreCommand}" CommandParameter="{Binding SelectedGenre}" />
                     </ContextMenu>
             </DataGrid.ContextMenu>

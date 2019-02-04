@@ -156,7 +156,7 @@ namespace DatabaseCRUD.ViewModel
                         MessageBoxResult res = MessageBox.Show("Вы уверены что хотите удалить элемент?", "Внимание!", MessageBoxButton.YesNo);
                         if (res.ToString() == "Yes")
                         {
-                            Artist.DeleteGenre(SelectedGenre.Genre);
+                            Artist.DeleteGenre(SelectedGenre);
                         }
                         else if (res.ToString() == "No")
                         {
