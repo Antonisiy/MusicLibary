@@ -15,15 +15,6 @@ namespace DatabaseCRUD.ViewModel
     {
         protected Command saveChangeCommand;
         public Song Song { get; set; }
-        public ObservableCollection<Album> Albums
-        {
-            get
-            {
-                var Songs = Song.ListAlbums(SelectedAlbum.Artist.Id);
-                Songs.Add(Song.Album);
-                return Songs;
-            }
-        }
         public Album SelectedAlbum { get; set; }
         public Action CloseAction { get; set; }
         public SongViewModel(ISong song)
@@ -40,7 +31,6 @@ namespace DatabaseCRUD.ViewModel
                   {
                       if(Validate(Song))
                       {
-                          Song.Album = SelectedAlbum;
                           CloseAction();
                       }
                       else
@@ -54,7 +44,7 @@ namespace DatabaseCRUD.ViewModel
         }
         bool Validate(Song song)
         {
-            if (string.IsNullOrWhiteSpace(song.Title))
+            if (string.IsNullOrWhiteSpace(song.Title) || string.IsNullOrWhiteSpace(song.Duration))
             {
                 return false;
             }

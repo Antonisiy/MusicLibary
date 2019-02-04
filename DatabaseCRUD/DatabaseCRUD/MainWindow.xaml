@@ -107,13 +107,6 @@
             <GroupBox x:Name="groupBoxAlbum" Grid.Row="2"  Grid.Column="0" Header="Альбомы исполнителя" HorizontalAlignment="Stretch" VerticalAlignment="Top" FontWeight="Bold">
                 <StackPanel >
                     <ListBox x:Name="AlbumS" DataContext="{Binding ElementName=Artists,Path=SelectedItem}" ItemsSource="{Binding Albums, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" MinHeight="50" >
-                        <!--<i:Interaction.Triggers>
-                            <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction 
-                                Command="{Binding SelectionAlbumChangeCommand, RelativeSource={}}"
-                                CommandParameter="{Binding ElementName=AlbumS,Path=SelectedItem}" />
-                               </i:EventTrigger>
-                        </i:Interaction.Triggers>-->
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Margin="5">
@@ -130,23 +123,27 @@
                     <Grid DataContext="{Binding ElementName=SongS, Path=SelectedItem}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                            
                         </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Grid.Row="1">Название:</Label>
-                    
+                        <Label Grid.Column="0" Grid.Row="0">Название:</Label>
+                        <Label Grid.Column="0" Grid.Row="1">Длительность:</Label>
 
-                        <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Title}" HorizontalAlignment="Left"></TextBlock>
+
+                        <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Title}" HorizontalAlignment="Left"></TextBlock>
+
+                        <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Duration}" HorizontalAlignment="Left"></TextBlock>
                  
                     </Grid>
                 </StackPanel>
             </GroupBox>
             <GroupBox x:Name="groupBoxSongs" Grid.Row="3"  Grid.Column="0" Header="Треки в альбоме" HorizontalAlignment="Stretch" VerticalAlignment="Top" FontWeight="Bold">
                 <StackPanel >
-                    <ListBox x:Name="SongS" DataContext="{Binding ElementName=AlbumS,Path=SelectedItem}" ItemsSource="{Binding Songs, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" MinHeight="50" >
+                    <ListBox x:Name="SongS" DataContext="{Binding ElementName=AlbumS,Path=SelectedItem}" ItemsSource="{Binding Songs, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}"  MinHeight="50" >
                         <!--<i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
                                 <i:InvokeCommandAction 

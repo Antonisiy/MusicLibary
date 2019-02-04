@@ -5,14 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DatabaseCRUD.View"
         mc:Ignorable="d"
-        Title="Трек" Height="200" Width="300" WindowStartupLocation="CenterScreen">
+        Title="Трек" Height="250" Width="300" SizeToContent="Height" WindowStartupLocation="CenterScreen">
     <StackPanel>
         <StackPanel DataContext="{Binding Song}">
             <Label x:Name="labelTitle" Content="Название" FontWeight="Bold" />
             <TextBox x:Name="textBoxTitle" Height="20" TextWrapping="Wrap" Text="{Binding Title}"/>
+            <Label x:Name="labelDuration" Content="Длительность" FontWeight="Bold" />
+            <TextBox x:Name="textBoxDuration" Height="20" TextWrapping="Wrap" Text="{Binding Duration}"/>
         </StackPanel>
         <Label x:Name="labelArtist" Content="Альбом" FontWeight="Bold"/>
-        <ComboBox x:Name="textBoxArtist" Height="30" ItemsSource="{Binding Albums, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedAlbum, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
+        <TextBlock x:Name="textBoxArtist" Height="30" Text="{Binding SelectedAlbum}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" FontStyle="Italic" FontSize="16" />
         <Button x:Name="buttonSave" Content="Сохранить" Command="{Binding SaveChangeCommand, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}"  Margin="10" IsDefault="True"/>
     </StackPanel>
 </Window>

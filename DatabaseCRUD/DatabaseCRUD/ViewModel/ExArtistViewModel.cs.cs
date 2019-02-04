@@ -37,7 +37,7 @@ namespace DatabaseCRUD.ViewModel
                 return createItemCommand ??
                   (createItemCommand = new Command((selectedItem) =>
                   {
-                      if (SelectedArtist.Id != null)
+                      if (SelectedArtist != null && SelectedArtist.Id != null)
                       {
                           SelectArtist(SelectedArtist);
                           CloseAction?.Invoke();

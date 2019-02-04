@@ -34,8 +34,6 @@ namespace DatabaseCRUD.ViewModel
         }
 
         public Artist SelectedArtist { get; set; }
-        public Album SelectedAlbum { get; set; }
-        public Song SelectedSong { get; set; }
         public Command UpdateItemCommand
         {
             get
@@ -106,35 +104,7 @@ namespace DatabaseCRUD.ViewModel
             }
 
         }
-        
-        public Command SelectionAlbumChangeCommand
-        {
-            get
-            {
-                return selectionAlbumChangeCommand ??
-                    (selectionAlbumChangeCommand = new Command(selectAlbum =>
-                    {
-                        var Album = selectAlbum as Album;
-                        if (selectAlbum == null) return;
-                        SelectedAlbum = Album;
-                    }, (obj) => Artists.Count() > 0));
-            }
 
-        }
-        public Command SelectionSongChangeCommand
-        {
-            get
-            {
-                return selectionAlbumChangeCommand ??
-                    (selectionAlbumChangeCommand = new Command(selectSong =>
-                    {
-                        var Song = selectSong as Song;
-                        if (selectSong == null) return;
-                        SelectedSong = Song;
-                    }, (obj) => Artists.Count() > 0));
-            }
-
-        }
-
+       
     }
 }

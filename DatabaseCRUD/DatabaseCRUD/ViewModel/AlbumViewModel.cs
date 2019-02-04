@@ -19,16 +19,6 @@ namespace DatabaseCRUD.ViewModel
     {
         protected Command saveChangeCommand;
         public Album Album { get; set; }
-        public ObservableCollection<Artist> Artists
-        {
-            
-            get {
-                //для отображения в окне редактирования текущего артиста
-                var Artists = Album.ListArtist;
-                Artists.Add(Album.Artist);
-                return Artists;
-            }
-        }
         public Artist SelectedArtist { get; set; }
         public ObservableCollection<Song> Songs
         {
@@ -50,7 +40,6 @@ namespace DatabaseCRUD.ViewModel
                   {
                       if(Validate(Album))
                       {
-                          Album.Artist = SelectedArtist;
                           CloseAction();
                       }
                       else
@@ -70,9 +59,11 @@ namespace DatabaseCRUD.ViewModel
                 return createItemCommand ??
                   (createItemCommand = new Command((selectedItem) =>
                   {
-                      SelectedSong = IocKernel.Get<Song>();
-                      SelectedSong.Album = Album;
-                      SelectedSong.AlbumId = Album.Id;
+                      SelectedSong = new Song
+                      {
+                          Album = Album,
+                          AlbumId = Album.Id
+                      };
                       SongView AlbumWindow = new SongView(SelectedSong);
                       if (AlbumWindow.ShowDialog() == true)
                       {
@@ -90,7 +81,6 @@ namespace DatabaseCRUD.ViewModel
                   {
                       if (SelectedSong == null)
                           return;
-                      SelectedSong.SongRepository = IocKernel.Get<ISongRepository>();
                       SongView AlbumWindow = new SongView(SelectedSong);
                       if (AlbumWindow.ShowDialog() == true)
                       {

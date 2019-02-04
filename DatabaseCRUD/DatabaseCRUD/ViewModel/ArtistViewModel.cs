@@ -61,9 +61,11 @@ namespace DatabaseCRUD.ViewModel
                 return addAlbumCommand ??
                   (addAlbumCommand = new Command((selectedItem) =>
                   {
-                      SelectedAlbum = IocKernel.Get<Album>();
-                      SelectedAlbum.Artist = Artist;
-                      SelectedAlbum.ArtistId = Artist.Id;
+                      SelectedAlbum = new Album
+                      {
+                          Artist = Artist,
+                          ArtistId = Artist.Id
+                      };
                       AlbumView AlbumWindow = new AlbumView(SelectedAlbum);
                       if (AlbumWindow.ShowDialog() == true)
                       {
@@ -81,7 +83,6 @@ namespace DatabaseCRUD.ViewModel
                   {
                       if (SelectedAlbum == null)
                           return;
-                      SelectedAlbum.AlbumRepository = IocKernel.Get<IAlbumRepository>();
                       AlbumView AlbumWindow = new AlbumView(SelectedAlbum);
                       if (AlbumWindow.ShowDialog() == true)
                       {

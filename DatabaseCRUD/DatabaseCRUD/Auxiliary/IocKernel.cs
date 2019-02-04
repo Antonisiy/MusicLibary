@@ -41,8 +41,6 @@ namespace DatabaseCRUD.Auxiliary
             Bind<MainWindowViewModel>().ToSelf().InTransientScope();
             Bind<GenresViewModel>().ToSelf().InTransientScope();
             Bind<Album>().ToSelf();
-            Bind<Song>().ToSelf();
-            Bind<Artist>().ToSelf();
             Bind<Genre>().ToSelf();
             Bind<IArtistRepository>().To<ArtistRepository>().InSingletonScope();
             Bind<IAlbumRepository>().To<AlbumRepository>().InSingletonScope(); 

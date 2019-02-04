@@ -18,7 +18,7 @@
             </StackPanel>
         </UserControl>
         <Label x:Name="labelArtist" Content="Артист" FontWeight="Bold"/>
-        <ComboBox x:Name="CBoxArtist" IsReadOnly="True" Height="30" ItemsSource="{Binding Artists, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedArtist, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock x:Name="CBoxArtist"  Height="30" Text="{Binding SelectedArtist}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" FontStyle="Italic" FontSize="16"/>
         <GroupBox x:Name="groupBoxGenres" Grid.ColumnSpan="4" Header="Треки в альбоме" HorizontalAlignment="Stretch" VerticalAlignment="Top" FontWeight="Bold">
             <StackPanel >
                 <ListBox x:Name="Track" ItemsSource="{Binding Songs}" SelectedItem="{Binding SelectedSong}" MinHeight="50">

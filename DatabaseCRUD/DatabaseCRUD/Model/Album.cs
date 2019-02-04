@@ -19,13 +19,6 @@ namespace DatabaseCRUD.DataModel
 {
     public class Album : IAlbum, INotifyPropertyChanged
     {
-        [NotMapped]
-        public IAlbumRepository AlbumRepository { get; set; }
-        public Album(IAlbumRepository albumRepository)
-        {
-            AlbumRepository = albumRepository;
-            Songs = new ObservableCollection<Song>();
-        }
         public Album()
         {
             Songs = new ObservableCollection<Song>();
@@ -35,7 +28,7 @@ namespace DatabaseCRUD.DataModel
         [Required]
         public string Title { get; set; }
         public string Description { get; set; }
-        public DateTime DateRelease { get; set; }
+        public DateTime? DateRelease { get; set; }
         [Required]
         [ForeignKey(nameof(Artist))]
         public string ArtistId { get; set; }
@@ -48,7 +41,7 @@ namespace DatabaseCRUD.DataModel
         [NotMapped]
         public string DateReleaseText
         {
-            get => DateRelease.ToShortDateString();
+            get => DateRelease.ToString();
         }
         public void CreateSong(Song newSong)
         {
@@ -66,12 +59,6 @@ namespace DatabaseCRUD.DataModel
         public void DeleteSong(Song delSong)
         {
             Songs.Remove(delSong);
-        }
-
-        [NotMapped]
-        public ObservableCollection<Artist> ListArtist
-        {
-            get => new ObservableCollection<Artist>(AlbumRepository.GetAllArtist());
         }
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
